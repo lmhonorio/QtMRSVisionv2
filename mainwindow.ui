@@ -27,7 +27,7 @@
      <string>CONECTAR GIGe</string>
     </property>
    </widget>
-   <widget class="QLabel" name="imagelabel">
+   <widget class="QLabel" name="imageIRlabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -35,6 +35,12 @@
       <width>421</width>
       <height>321</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
@@ -85,7 +91,7 @@
      <string>CONECTAR USB</string>
     </property>
    </widget>
-   <widget class="QLabel" name="usbImageLabel">
+   <widget class="QLabel" name="ImageUSBLabel">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -120,7 +126,7 @@
      <string>CONFIGURAR</string>
     </property>
    </widget>
-   <widget class="QLabel" name="usbContourLabel">
+   <widget class="QLabel" name="imageContourUSBLabel">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -136,7 +142,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="irContourLabel">
+   <widget class="QLabel" name="imageCountourIRlabel">
     <property name="geometry">
      <rect>
       <x>20</x>

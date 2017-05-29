@@ -99,7 +99,7 @@ public:
     virtual void HandleReceivedImage(void){}
 
 signals:
-    void sendImage(QPixmap img);
+    void sendPixmapImage(QPixmap img);
     void sendMatImage(cv::Mat img);
 
 protected:

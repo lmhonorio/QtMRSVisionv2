@@ -72,7 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(myUSBcam,SIGNAL(newImage(Mat)),this,SLOT(processImage(Mat)));
     //connect(myFlir,SIGNAL(newImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
-    connect(myFlir,SIGNAL(sendImage(QPixmap)),this,SLOT(processIRQImage(QPixmap)));
+    connect(myFlir,SIGNAL(sendPixmapImage(QPixmap)),this,SLOT(processIRQImage(QPixmap)));
+    connect(myFlir,SIGNAL(sendMatImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
 
 
 }
@@ -90,7 +91,7 @@ void MainWindow::on_btok_clicked()
     J_STATUS_TYPE   retval;
 
     myFlir->setHandler(&myFlir->m_hCamBase,16,1);
-    myFlir->openStream(0, ui->imagelabel );
+    myFlir->openStream(0, ui->imageContourUSBLabel );
 
     // Start Acquisition
     retval = J_Camera_ExecuteCommand(myFlir->m_hCamBase, NODE_NAME_ACQSTART);
@@ -108,13 +109,13 @@ void MainWindow::processImage(Mat cameraFrame)
     Mat framergb;
     cv::cvtColor(cameraFrame, framergb, CV_RGB2BGR);
     QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
-    ui->usbImageLabel->setPixmap(QPixmap::fromImage(im));
+    ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
 }
 
 void MainWindow::processIRQImage(QPixmap image)
 {
-    qInfo("aqi1");
-    ui->imagelabel->setPixmap(image);
+
+    ui->imageIRlabel->setPixmap(image);
 
 
      //ui->imagelabel->setPixmap(QPixmap::fromImage(image));
@@ -124,12 +125,15 @@ void MainWindow::processIRQImage(QPixmap image)
 
 void MainWindow::processIRImage(cv::Mat Img_Iron)
 {
-    qInfo("aqui");
-//    Mat framergb;
+//    qInfo("aqui");
+//    imshow("iron8",Img_Iron);
+
+
+    Mat framergb;
 //    //fFindContours(Img_Iron, &framergb );
-//    cv::cvtColor(Img_Iron, framergb, CV_RGB2BGR);
-//    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
-//    ui->imagelabel->setPixmap(QPixmap::fromImage(im));
+    cv::cvtColor(Img_Iron, framergb, CV_RGB2BGR);
+    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
+    ui->imageCountourIRlabel->setPixmap(QPixmap::fromImage(im));
 }
 
 
@@ -160,9 +164,17 @@ void MainWindow::on_bFindCamera_clicked()
 
 void MainWindow::on_bLoadFlirConfig_clicked()
 {
-    qInfo("conectando");
-    connect(myUSBcam,SIGNAL(newImage(cv::Mat)),this,SLOT(processImage(cv::Mat)));
-    connect(myFlir,SIGNAL(newImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
+
+    Mat imLena,framergb;
+    imLena = imread("C:\\Users\\usuario\\Dropbox\\Projetos\\VisualProcessing\\Qtprojects\\QtMRSVision\\lena2.jpg",1);
+    cv::cvtColor(imLena, framergb, CV_RGB2BGR);
+    QImage im = QImage((uchar*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
+    //imshow("iron8",imLena);
+    ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
+
+//    qInfo("conectando");
+//    connect(myUSBcam,SIGNAL(newImage(cv::Mat)),this,SLOT(processImage(cv::Mat)));
+//    connect(myFlir,SIGNAL(newImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
 
 //    QFileDialog dialog;
 //    QString fileName = "not configured";

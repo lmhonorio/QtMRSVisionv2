@@ -197,7 +197,8 @@ void CFlirCamera::HandleReceivedImage(void)
     QPixmap pm = QPixmap::fromImage(im);
     //eth_imgHandler->setPixmap(QPixmap::fromImage(im));
 
-    sendImage(pm);
+    sendPixmapImage(pm);
+    sendMatImage(Img_Iron);
     //newImage(im);
    // newImage(Img_Iron);
     //newImage(Img_Iron);
