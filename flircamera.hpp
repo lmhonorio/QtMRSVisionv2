@@ -8,7 +8,6 @@
 #include "atlconv.h"
 
 #include <QThread>
-#include <QImage>
 
 
 #define ASY_SAFEGUARD 1.0002
@@ -293,7 +292,7 @@ public:
 
     QMutex* mutex;
 
-    J_STATUS_TYPE openStream(uint32_t iChannel, QLabel *l1);
+    J_STATUS_TYPE openStream(uint32_t iChannel);
 
     void StreamCBFunc(J_tIMAGE_INFO * pAqImageInfo) override;
 
@@ -313,10 +312,6 @@ public:
     void   doUpdateCalcConst(void);
     double tempToObjSig(double dblKelvin);
 
-
-    //qt only
-    QLabel* eth_imgHandler;
-   // QLabel* usb_imgHandler;
 
 
     //thermal camera only

@@ -32,14 +32,16 @@ FORMS    += \
 
 
 
-//opencv
+#opencv
 INCLUDEPATH += "C:\opencv24\opencv\build\install32\include"
 LIBS += -L"C:\opencv24\opencv\build\install32\lib"
 LIBS += -L"C:\opencv24\opencv\build\install32\bin"
 LIBS += -lopencv_core2411d -lopencv_highgui2411d -lopencv_imgproc2411d -lopencv_legacy2411d
+#LIBS += -lopencv_core2411 -lopencv_highgui2411 -lopencv_imgproc2411 -lopencv_legacy2411
 
 
-//jai-gigbethernet
+
+#jai-gigbethernet
 INCLUDEPATH += "C:\Program Files\JAI\SDK\library\CPP\include"
 LIBS += -L"C:\Program Files\JAI\SDK\library\CPP\lib\Win32_i86"
 LIBS += -lJai_Factory

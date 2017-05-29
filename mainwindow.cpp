@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include <usbcam.hpp>
+#include <exception>
 
 #include <QTimer>
 #include<QWindow>
@@ -19,39 +20,14 @@
 
 //CBaseGIGeCamera myGCam;
 using namespace cv;
+using namespace std;
+
 QMutex mutex1;
 
 CFlirCamera* myFlir;
 usbCam* myUSBcam;
 RNG rng(12345);
 
-
-void fFindContours(Mat original, Mat* mcontours )
-{
-    Mat canny_output, src_gray;
-    vector<vector<Point> > contours;
-    vector<Vec4i> hierarchy;
-
-    cvtColor( original, src_gray, CV_BGR2GRAY );
-    blur( src_gray, src_gray, Size(3,3) );
-
-    /// Detect edges using canny
-
-    Canny( src_gray, canny_output, 50, 100, 3 );
-    /// Find contours
-    findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
-
-    /// Draw contours
-    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
-    for( int i = 0; i< contours.size(); i++ )
-    {
-        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-        drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
-    }
-
-    *mcontours = drawing;
-
-}
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -65,14 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     myFlir = new CFlirCamera();
-
     myUSBcam = new usbCam();
+
     myFlir->mutex = &mutex1;
     myUSBcam->mutex1 = &mutex1;
 
     connect(myUSBcam,SIGNAL(newImage(Mat)),this,SLOT(processImage(Mat)));
-    //connect(myFlir,SIGNAL(newImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
-    connect(myFlir,SIGNAL(sendPixmapImage(QPixmap)),this,SLOT(processIRQImage(QPixmap)));
     connect(myFlir,SIGNAL(sendMatImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
 
 
@@ -91,7 +65,7 @@ void MainWindow::on_btok_clicked()
     J_STATUS_TYPE   retval;
 
     myFlir->setHandler(&myFlir->m_hCamBase,16,1);
-    myFlir->openStream(0, ui->imageContourUSBLabel );
+    myFlir->openStream(0);
 
     // Start Acquisition
     retval = J_Camera_ExecuteCommand(myFlir->m_hCamBase, NODE_NAME_ACQSTART);
@@ -103,24 +77,63 @@ void MainWindow::on_btok_clicked()
 
 }
 
+void MainWindow::fFindContours(Mat original, Mat* mcontours )
+{
+    Mat canny_output, src_gray;
+    vector<vector<Point>> contours;
+    vector<Vec4i> hierarchy;
+
+    cvtColor( original, src_gray, CV_BGR2GRAY );
+   // blur( src_gray, src_gray, Size(3,3) );
+
+    int thr1 = ui->qthrshould1->value();
+    int thr2 = ui->qthrshould2->value();
+
+//    /// Detect edges using canny
+
+    Canny( src_gray, canny_output, thr1, thr2, 3 );
+//    /// Find contours
+
+     findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+
+
+//    /// Draw contours
+    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
+    for( int i = 0; i< contours.size(); i++ )
+    {
+        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+        drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+    }
+
+
+    *mcontours = drawing;
+
+}
+
 
 void MainWindow::processImage(Mat cameraFrame)
 {
-    Mat framergb;
+    Mat framergb, irContours, irBGR;
+    fFindContours(cameraFrame, &irContours );
     cv::cvtColor(cameraFrame, framergb, CV_RGB2BGR);
     QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
     ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
+
+
+    cv::cvtColor(irContours, irBGR, CV_RGB2BGR);
+    QImage im2 = QImage((const unsigned char*) irBGR.data, irBGR.cols, irBGR.rows, QImage::Format_RGB888);
+    ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
 }
 
-void MainWindow::processIRQImage(QPixmap image)
-{
+//void MainWindow::processIRQImage(QPixmap image)
+//{
 
-    ui->imageIRlabel->setPixmap(image);
+//    ui->imageIRlabel->setPixmap(image);
 
 
-     //ui->imagelabel->setPixmap(QPixmap::fromImage(image));
+//     //ui->imagelabel->setPixmap(QPixmap::fromImage(image));
 
-}
+//}
 
 
 void MainWindow::processIRImage(cv::Mat Img_Iron)
@@ -129,11 +142,18 @@ void MainWindow::processIRImage(cv::Mat Img_Iron)
 //    imshow("iron8",Img_Iron);
 
 
-    Mat framergb;
-//    //fFindContours(Img_Iron, &framergb );
+    Mat framergb, irContours, iRGBContours;
+
+    //show imagem original
     cv::cvtColor(Img_Iron, framergb, CV_RGB2BGR);
     QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
-    ui->imageCountourIRlabel->setPixmap(QPixmap::fromImage(im));
+    ui->imageIRlabel->setPixmap(QPixmap::fromImage(im));
+
+    //show contorno
+    fFindContours(Img_Iron, &irContours );
+    cv::cvtColor(irContours, iRGBContours, CV_RGB2BGR);
+    QImage imr = QImage((const unsigned char*) iRGBContours.data, iRGBContours.cols, iRGBContours.rows, QImage::Format_RGB888);
+    ui->imageCountourIRlabel->setPixmap(QPixmap::fromImage(imr));
 }
 
 
@@ -157,7 +177,6 @@ void MainWindow::on_busbCam_clicked()
 void MainWindow::on_bFindCamera_clicked()
 {
     myFlir->OpenFactoryAndCamera();
-    //myGCam.OpenFactoryAndCamera();
     ui->lb_cameraname->setText(myFlir->GetCameraName());
 
 }

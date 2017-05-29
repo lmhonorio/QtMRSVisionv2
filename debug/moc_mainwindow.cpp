@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[12];
-    char stringdata0[159];
+    QByteArrayData data[15];
+    char stringdata0[181];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,17 +38,21 @@ QT_MOC_LITERAL(3, 25, 3), // "Mat"
 QT_MOC_LITERAL(4, 29, 5), // "image"
 QT_MOC_LITERAL(5, 35, 14), // "processIRImage"
 QT_MOC_LITERAL(6, 50, 7), // "cv::Mat"
-QT_MOC_LITERAL(7, 58, 15), // "processIRQImage"
-QT_MOC_LITERAL(8, 74, 15), // "on_btok_clicked"
-QT_MOC_LITERAL(9, 90, 22), // "on_bFindCamera_clicked"
-QT_MOC_LITERAL(10, 113, 18), // "on_busbCam_clicked"
-QT_MOC_LITERAL(11, 132, 26) // "on_bLoadFlirConfig_clicked"
+QT_MOC_LITERAL(7, 58, 13), // "fFindContours"
+QT_MOC_LITERAL(8, 72, 8), // "original"
+QT_MOC_LITERAL(9, 81, 4), // "Mat*"
+QT_MOC_LITERAL(10, 86, 9), // "mcontours"
+QT_MOC_LITERAL(11, 96, 15), // "on_btok_clicked"
+QT_MOC_LITERAL(12, 112, 22), // "on_bFindCamera_clicked"
+QT_MOC_LITERAL(13, 135, 18), // "on_busbCam_clicked"
+QT_MOC_LITERAL(14, 154, 26) // "on_bLoadFlirConfig_clicked"
 
     },
     "MainWindow\0processImage\0\0Mat\0image\0"
-    "processIRImage\0cv::Mat\0processIRQImage\0"
-    "on_btok_clicked\0on_bFindCamera_clicked\0"
-    "on_busbCam_clicked\0on_bLoadFlirConfig_clicked"
+    "processIRImage\0cv::Mat\0fFindContours\0"
+    "original\0Mat*\0mcontours\0on_btok_clicked\0"
+    "on_bFindCamera_clicked\0on_busbCam_clicked\0"
+    "on_bLoadFlirConfig_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -68,16 +72,16 @@ static const uint qt_meta_data_MainWindow[] = {
  // slots: name, argc, parameters, tag, flags
        1,    1,   49,    2, 0x0a /* Public */,
        5,    1,   52,    2, 0x0a /* Public */,
-       7,    1,   55,    2, 0x0a /* Public */,
-       8,    0,   58,    2, 0x0a /* Public */,
-       9,    0,   59,    2, 0x0a /* Public */,
-      10,    0,   60,    2, 0x0a /* Public */,
-      11,    0,   61,    2, 0x0a /* Public */,
+       7,    2,   55,    2, 0x0a /* Public */,
+      11,    0,   60,    2, 0x0a /* Public */,
+      12,    0,   61,    2, 0x0a /* Public */,
+      13,    0,   62,    2, 0x0a /* Public */,
+      14,    0,   63,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void, 0x80000000 | 6,    4,
-    QMetaType::Void, QMetaType::QPixmap,    4,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 9,    8,   10,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -94,7 +98,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->processImage((*reinterpret_cast< Mat(*)>(_a[1]))); break;
         case 1: _t->processIRImage((*reinterpret_cast< cv::Mat(*)>(_a[1]))); break;
-        case 2: _t->processIRQImage((*reinterpret_cast< QPixmap(*)>(_a[1]))); break;
+        case 2: _t->fFindContours((*reinterpret_cast< Mat(*)>(_a[1])),(*reinterpret_cast< Mat*(*)>(_a[2]))); break;
         case 3: _t->on_btok_clicked(); break;
         case 4: _t->on_bFindCamera_clicked(); break;
         case 5: _t->on_busbCam_clicked(); break;

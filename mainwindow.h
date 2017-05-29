@@ -29,7 +29,8 @@ public:
 public slots:
     void processImage(Mat image);
     void processIRImage(cv::Mat image);
-    void processIRQImage(QPixmap image);
+    //void processIRQImage(QPixmap image);
+    void fFindContours(Mat original, Mat* mcontours );
     void on_btok_clicked();
     void on_bFindCamera_clicked();
     void on_busbCam_clicked();

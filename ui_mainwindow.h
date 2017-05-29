@@ -18,6 +18,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -37,6 +38,8 @@ public:
     QPushButton *bLoadFlirConfig;
     QLabel *imageContourUSBLabel;
     QLabel *imageCountourIRlabel;
+    QSlider *qthrshould1;
+    QSlider *qthrshould2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -45,12 +48,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(888, 777);
+        MainWindow->resize(888, 796);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         btok = new QPushButton(centralWidget);
         btok->setObjectName(QStringLiteral("btok"));
-        btok->setGeometry(QRect(220, 680, 111, 31));
+        btok->setGeometry(QRect(220, 700, 111, 31));
         imageIRlabel = new QLabel(centralWidget);
         imageIRlabel->setObjectName(QStringLiteral("imageIRlabel"));
         imageIRlabel->setGeometry(QRect(20, 10, 421, 321));
@@ -63,13 +66,13 @@ public:
         imageIRlabel->setScaledContents(false);
         bFindCamera = new QPushButton(centralWidget);
         bFindCamera->setObjectName(QStringLiteral("bFindCamera"));
-        bFindCamera->setGeometry(QRect(20, 680, 91, 31));
+        bFindCamera->setGeometry(QRect(20, 700, 91, 31));
         lb_cameraname = new QLabel(centralWidget);
         lb_cameraname->setObjectName(QStringLiteral("lb_cameraname"));
-        lb_cameraname->setGeometry(QRect(30, 660, 181, 21));
+        lb_cameraname->setGeometry(QRect(30, 680, 181, 21));
         busbCam = new QPushButton(centralWidget);
         busbCam->setObjectName(QStringLiteral("busbCam"));
-        busbCam->setGeometry(QRect(760, 670, 111, 31));
+        busbCam->setGeometry(QRect(760, 690, 111, 31));
         ImageUSBLabel = new QLabel(centralWidget);
         ImageUSBLabel->setObjectName(QStringLiteral("ImageUSBLabel"));
         ImageUSBLabel->setGeometry(QRect(450, 10, 421, 321));
@@ -78,7 +81,7 @@ public:
         ImageUSBLabel->setScaledContents(false);
         bLoadFlirConfig = new QPushButton(centralWidget);
         bLoadFlirConfig->setObjectName(QStringLiteral("bLoadFlirConfig"));
-        bLoadFlirConfig->setGeometry(QRect(120, 680, 91, 31));
+        bLoadFlirConfig->setGeometry(QRect(120, 700, 91, 31));
         imageContourUSBLabel = new QLabel(centralWidget);
         imageContourUSBLabel->setObjectName(QStringLiteral("imageContourUSBLabel"));
         imageContourUSBLabel->setGeometry(QRect(450, 340, 421, 311));
@@ -87,6 +90,17 @@ public:
         imageCountourIRlabel->setObjectName(QStringLiteral("imageCountourIRlabel"));
         imageCountourIRlabel->setGeometry(QRect(20, 340, 421, 311));
         imageCountourIRlabel->setFrameShape(QFrame::Box);
+        qthrshould1 = new QSlider(centralWidget);
+        qthrshould1->setObjectName(QStringLiteral("qthrshould1"));
+        qthrshould1->setGeometry(QRect(360, 690, 160, 16));
+        qthrshould1->setMaximum(200);
+        qthrshould1->setOrientation(Qt::Horizontal);
+        qthrshould2 = new QSlider(centralWidget);
+        qthrshould2->setObjectName(QStringLiteral("qthrshould2"));
+        qthrshould2->setGeometry(QRect(360, 710, 160, 16));
+        qthrshould2->setMaximum(200);
+        qthrshould2->setValue(200);
+        qthrshould2->setOrientation(Qt::Horizontal);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

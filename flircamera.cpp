@@ -1,6 +1,5 @@
 #include "flircamera.hpp"
 #include <exception>
-#include <QImage>
 
 
 using namespace std;
@@ -150,6 +149,7 @@ void CFlirCamera::HandleReceivedImage(void)
     int nRows = Img_Iron.rows;
     int nCols = Img_Iron.cols ;
 
+
     if (Img_Iron.isContinuous())
     {
         nCols *= nRows;
@@ -191,17 +191,11 @@ void CFlirCamera::HandleReceivedImage(void)
 
 
     mutex->lock();
-    cv::Mat framergb;
-    cv::cvtColor(Img_Iron, framergb, CV_RGB2BGR);
-    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
-    QPixmap pm = QPixmap::fromImage(im);
-    //eth_imgHandler->setPixmap(QPixmap::fromImage(im));
+    cv::Mat redImg;
+    cv::resize(Img_Iron, redImg, cv::Size(Img_Iron.cols * 0.5,Img_Iron.rows * 0.5), 0, 0, CV_INTER_LINEAR);
+    //sendMatImage(Img_Iron);
+    sendMatImage(redImg);
 
-    sendPixmapImage(pm);
-    sendMatImage(Img_Iron);
-    //newImage(im);
-   // newImage(Img_Iron);
-    //newImage(Img_Iron);
     cv::waitKey(10);
     mutex->unlock();
 
@@ -210,7 +204,7 @@ void CFlirCamera::HandleReceivedImage(void)
 }
 
 
-J_STATUS_TYPE  CFlirCamera::openStream(uint32_t iChannel, QLabel *l1)
+J_STATUS_TYPE  CFlirCamera::openStream(uint32_t iChannel)
 {
     USBstream.open(0);
 
@@ -220,8 +214,6 @@ J_STATUS_TYPE  CFlirCamera::openStream(uint32_t iChannel, QLabel *l1)
 
 
     uint32_t iBufferSize = getBufferSize();
-
-    eth_imgHandler = l1;
 
     //setWindowHnd(newpbHnd, wndName, newusbpbHnd, wndusbName);
     J_STATUS_TYPE retval = J_Image_OpenStream(*m_hCam, 0, reinterpret_cast<J_IMG_CALLBACK_OBJECT>(this), reinterpret_cast<J_IMG_CALLBACK_FUNCTION>(&CFlirCamera::StreamCBFunc), &m_hThread, iBufferSize);

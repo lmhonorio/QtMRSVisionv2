@@ -435,6 +435,7 @@ release\moc_basegigecamera.cpp: ui_mainwindow.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QToolBar \
@@ -893,6 +894,7 @@ release\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QToolBar \
@@ -1225,6 +1227,7 @@ release\basegigecamera.obj: basegigecamera.cpp basegigecamera.hpp \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QToolBar \
@@ -1430,6 +1433,7 @@ release\flircamera.obj: flircamera.cpp flircamera.hpp \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QToolBar \
