@@ -49,6 +49,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(myUSBcam,SIGNAL(newImage(Mat)),this,SLOT(processImage(Mat)));
     connect(myFlir,SIGNAL(sendMatImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
 
+    ui->qtextIR1->setText(QString::number(ui->qsliderIR1->value()));
+    ui->qtextIR2->setText(QString::number(ui->qsliderIR2->value()));
+
+    ui->qtextUSB1->setText(QString::number(ui->qsliderUSB1->value()));
+    ui->qtextUSB2->setText(QString::number(ui->qsliderUSB2->value()));
+
 
 }
 
@@ -77,44 +83,58 @@ void MainWindow::on_btok_clicked()
 
 }
 
-void MainWindow::fFindContours(Mat original, Mat* mcontours )
+void MainWindow::fFindContours(Mat original, Mat* mcontours, double t1, double t2, int cameratype )
 {
     Mat canny_output, src_gray;
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
 
     cvtColor( original, src_gray, CV_BGR2GRAY );
-   // blur( src_gray, src_gray, Size(3,3) );
+    Mat ccolour;
 
-    int thr1 = ui->qthrshould1->value();
-    int thr2 = ui->qthrshould2->value();
-
-//    /// Detect edges using canny
-
-    Canny( src_gray, canny_output, thr1, thr2, 3 );
-//    /// Find contours
-
-     findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
-
-
-//    /// Draw contours
-    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
-    for( int i = 0; i< contours.size(); i++ )
+    if(cameratype==1)
     {
-        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-        drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+        Canny( src_gray, canny_output, t1, t2, 3 );
+    //    imshow("ircanny",canny_output);
+    }
+    else
+    {
+        blur( src_gray, src_gray, Size(5,5));
+        Canny( src_gray, canny_output, t1, t2, 3 );
+      //  imshow("usbcanny",canny_output);
     }
 
 
-    *mcontours = drawing;
+    /// Find contours
+
+//    findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+
+
+////    /// Draw contours
+//    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
+//    for( int i = 0; i< contours.size(); i++ )
+//    {
+//        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+//        drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+//    }
+
+
+
+    cvtColor(canny_output,ccolour,CV_GRAY2BGR);
+    // imshow("usb",ccolour);
+
+    *mcontours = ccolour;
 
 }
 
 
 void MainWindow::processImage(Mat cameraFrame)
 {
+    int thr1 = ui->qsliderUSB1->value();
+    int thr2 = ui->qsliderUSB2->value();
+
     Mat framergb, irContours, irBGR;
-    fFindContours(cameraFrame, &irContours );
+    fFindContours(cameraFrame, &irContours, thr1, thr2,0 );
     cv::cvtColor(cameraFrame, framergb, CV_RGB2BGR);
     QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
     ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
@@ -149,8 +169,12 @@ void MainWindow::processIRImage(cv::Mat Img_Iron)
     QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
     ui->imageIRlabel->setPixmap(QPixmap::fromImage(im));
 
+
+
     //show contorno
-    fFindContours(Img_Iron, &irContours );
+    int thr1 = ui->qsliderIR1->value();
+    int thr2 = ui->qsliderIR2->value();
+    fFindContours(Img_Iron, &irContours, thr1, thr2,1 );
     cv::cvtColor(irContours, iRGBContours, CV_RGB2BGR);
     QImage imr = QImage((const unsigned char*) iRGBContours.data, iRGBContours.cols, iRGBContours.rows, QImage::Format_RGB888);
     ui->imageCountourIRlabel->setPixmap(QPixmap::fromImage(imr));
@@ -222,4 +246,24 @@ void MainWindow::on_bLoadFlirConfig_clicked()
 //    }
 
     return;
+}
+
+void MainWindow::on_qsliderIR1_valueChanged(int value)
+{
+    ui->qtextIR1->setText(QString::number(value));
+}
+
+void MainWindow::on_qsliderIR2_valueChanged(int value)
+{
+    ui->qtextIR2->setText(QString::number(value));
+}
+
+void MainWindow::on_qsliderUSB1_valueChanged(int value)
+{
+    ui->qtextUSB1->setText(QString::number(value));
+}
+
+void MainWindow::on_qsliderUSB2_valueChanged(int value)
+{
+    ui->qtextUSB2->setText(QString::number(value));
 }

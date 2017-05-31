@@ -30,11 +30,20 @@ public slots:
     void processImage(Mat image);
     void processIRImage(cv::Mat image);
     //void processIRQImage(QPixmap image);
-    void fFindContours(Mat original, Mat* mcontours );
+    void fFindContours(Mat original, Mat* mcontours , double t1, double t2, int cameratype);
     void on_btok_clicked();
     void on_bFindCamera_clicked();
     void on_busbCam_clicked();
     void on_bLoadFlirConfig_clicked();
+
+private slots:
+    void on_qsliderIR1_valueChanged(int value);
+
+    void on_qsliderIR2_valueChanged(int value);
+
+    void on_qsliderUSB1_valueChanged(int value);
+
+    void on_qsliderUSB2_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

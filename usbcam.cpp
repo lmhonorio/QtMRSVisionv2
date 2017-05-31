@@ -42,8 +42,11 @@ void usbCam::donextFrame()
         Mat framergb;
         Mat cameraFrame;
         USBstream.read(cameraFrame);
+
         cv::Mat redImg;
         cv::resize(cameraFrame, redImg, cv::Size(cameraFrame.cols * 0.5,cameraFrame.rows * 0.5), 0, 0, CV_INTER_LINEAR);
+        cv::Rect myROI(50, 50, 120, 120);
+        redImg = redImg(myROI);
         newImage(redImg);
         //newImage(cameraFrame);
     }
