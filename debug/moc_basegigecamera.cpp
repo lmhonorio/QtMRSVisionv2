@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CBaseGIGeCamera_t {
-    QByteArrayData data[5];
-    char stringdata0[42];
+    QByteArrayData data[6];
+    char stringdata0[52];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,11 +35,12 @@ QT_MOC_LITERAL(0, 0, 15), // "CBaseGIGeCamera"
 QT_MOC_LITERAL(1, 16, 12), // "sendMatImage"
 QT_MOC_LITERAL(2, 29, 0), // ""
 QT_MOC_LITERAL(3, 30, 7), // "cv::Mat"
-QT_MOC_LITERAL(4, 38, 3) // "img"
+QT_MOC_LITERAL(4, 38, 3), // "img"
+QT_MOC_LITERAL(5, 42, 9) // "timestamp"
 
     },
     "CBaseGIGeCamera\0sendMatImage\0\0cv::Mat\0"
-    "img"
+    "img\0timestamp"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,10 +58,10 @@ static const uint qt_meta_data_CBaseGIGeCamera[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x06 /* Public */,
+       1,    2,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::LongLong,    4,    5,
 
        0        // eod
 };
@@ -71,14 +72,14 @@ void CBaseGIGeCamera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         CBaseGIGeCamera *_t = static_cast<CBaseGIGeCamera *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->sendMatImage((*reinterpret_cast< cv::Mat(*)>(_a[1]))); break;
+        case 0: _t->sendMatImage((*reinterpret_cast< cv::Mat(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (CBaseGIGeCamera::*_t)(cv::Mat );
+            typedef void (CBaseGIGeCamera::*_t)(cv::Mat , qint64 );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CBaseGIGeCamera::sendMatImage)) {
                 *result = 0;
                 return;
@@ -124,9 +125,9 @@ int CBaseGIGeCamera::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CBaseGIGeCamera::sendMatImage(cv::Mat _t1)
+void CBaseGIGeCamera::sendMatImage(cv::Mat _t1, qint64 _t2)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

@@ -18,6 +18,7 @@
 #include <QThread>
 #include <QImage>
 
+
 #define NODE_NAME_WIDTH						(int8_t*)"Width"
 #define NODE_NAME_HEIGHT					(int8_t*)"Height"
 #define NODE_NAME_PIXELFORMAT				(int8_t*)"PixelFormat"
@@ -51,6 +52,7 @@ public:
 
    // __event void OnEventRaised(std::string* message);
     cv::Mat current;
+    qint64 timestamp;
 
         //methods related with generic GIGe Cameras
     CAM_HANDLE			m_hCamBase;
@@ -101,7 +103,7 @@ public:
 
 signals:
     //void sendPixmapImage(QPixmap img);
-    void sendMatImage(cv::Mat img);
+    void sendMatImage(cv::Mat img, qint64 timestamp);
 
 protected:
     HWND* hPicBox;

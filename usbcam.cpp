@@ -1,4 +1,5 @@
 #include "usbcam.hpp"
+#include <QTime>
 
 using namespace cv;
 
@@ -37,6 +38,20 @@ void usbCam::runUSBCamera()
 void usbCam::donextFrame()
 {
 
+    timestamp = QDateTime().currentMSecsSinceEpoch();
+    QString text;
+    text.sprintf("%d",timestamp);
+
+    QByteArray ba = text.toLatin1();
+    const char *c_str2 = ba.data();
+    int fontFace = FONT_HERSHEY_PLAIN;
+    double fontScale = 2;
+    int thickness = 3;
+    int baseline=0;
+    Size textSize = getTextSize(c_str2, fontFace,fontScale, thickness, &baseline);
+
+    Point textOrg(5, 50);
+
 
     mutex1->lock();
     if(USBstream.isOpened())
@@ -48,12 +63,15 @@ void usbCam::donextFrame()
         cv::Mat redImg;
         cv::Rect myROI(px, py, hx, hy);
         redImg = cameraFrame(myROI);
-        //cv::resize(cameraFrame, redImg, cv::Size(cameraFrame.cols * 0.4,cameraFrame.rows * 0.4), 0, 0, CV_INTER_LINEAR);
+
         cv::resize(redImg, redImg, cv::Size(640,512), 0, 0, CV_INTER_LINEAR);
+        current = redImg.clone();
+        putText(redImg, c_str2, textOrg, fontFace, fontScale, Scalar::all(255), thickness, 8);
 
 
-        current = redImg;
-        newImage(redImg);
+
+
+        newImage(redImg,timestamp);
         //newImage(cameraFrame);
     }
     else

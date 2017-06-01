@@ -1,5 +1,6 @@
 #include "flircamera.hpp"
 #include <exception>
+#include <QTime>
 
 
 using namespace std;
@@ -106,6 +107,8 @@ void CFlirCamera::HandleReceivedImage(void)
 {
 
 
+
+
     cv::Mat imat_thermalSignal= cv::Mat(m_BufferInfo.iSizeX,m_BufferInfo.iSizeY, CV_16U );
     cv::Mat Img_8Bit_Gray(m_BufferInfo.iSizeX,m_BufferInfo.iSizeY,CV_8U);
 
@@ -176,6 +179,20 @@ void CFlirCamera::HandleReceivedImage(void)
     T.setUnit(CTemperature::Celsius);
     T = TauToTemp(maxvalue/4);
 
+    timestamp = QDateTime().currentMSecsSinceEpoch();
+
+    QString text;
+    text.sprintf("%.1f C,  %d", T.Value(),timestamp);
+    QByteArray ba = text.toLatin1();
+    const char *c_str2 = ba.data();
+    int fontFace = cv::FONT_HERSHEY_PLAIN;
+    double fontScale = 2;
+    int thickness = 3;
+    int baseline=0;
+    cv::Size textSize = cv::getTextSize(c_str2, fontFace,fontScale, thickness, &baseline);
+
+    cv::Point textOrg(5, 50);
+
     //QString Sm;
     //Sm.Format(_T("%.1f C"),T.Value());
     //CW2A pszConvertedAnsiString (Sm);
@@ -196,7 +213,8 @@ void CFlirCamera::HandleReceivedImage(void)
     //cv::resize(Img_Iron, redImg, cv::Size(Img_Iron.cols * 0.5,Img_Iron.rows * 0.5), 0, 0, CV_INTER_LINEAR);
     //sendMatImage(Img_Iron);
     current = redImg.clone();
-    sendMatImage(redImg);
+    putText(redImg, c_str2, textOrg, fontFace, fontScale, cv::Scalar::all(255), thickness, 8);
+    sendMatImage(redImg,timestamp);
 
     cv::waitKey(10);
     mutex->unlock();

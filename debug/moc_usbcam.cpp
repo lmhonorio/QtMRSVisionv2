@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_usbCam_t {
-    QByteArrayData data[6];
-    char stringdata0[39];
+    QByteArrayData data[7];
+    char stringdata0[49];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,10 +36,12 @@ QT_MOC_LITERAL(1, 7, 8), // "newImage"
 QT_MOC_LITERAL(2, 16, 0), // ""
 QT_MOC_LITERAL(3, 17, 3), // "Mat"
 QT_MOC_LITERAL(4, 21, 5), // "image"
-QT_MOC_LITERAL(5, 27, 11) // "donextFrame"
+QT_MOC_LITERAL(5, 27, 9), // "timestamp"
+QT_MOC_LITERAL(6, 37, 11) // "donextFrame"
 
     },
-    "usbCam\0newImage\0\0Mat\0image\0donextFrame"
+    "usbCam\0newImage\0\0Mat\0image\0timestamp\0"
+    "donextFrame"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,13 +59,13 @@ static const uint qt_meta_data_usbCam[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
+       1,    2,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   27,    2, 0x0a /* Public */,
+       6,    0,   29,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::LongLong,    4,    5,
 
  // slots: parameters
     QMetaType::Void,
@@ -77,7 +79,7 @@ void usbCam::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         usbCam *_t = static_cast<usbCam *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->newImage((*reinterpret_cast< Mat(*)>(_a[1]))); break;
+        case 0: _t->newImage((*reinterpret_cast< Mat(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2]))); break;
         case 1: _t->donextFrame(); break;
         default: ;
         }
@@ -85,7 +87,7 @@ void usbCam::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (usbCam::*_t)(Mat );
+            typedef void (usbCam::*_t)(Mat , qint64 );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&usbCam::newImage)) {
                 *result = 0;
                 return;
@@ -131,9 +133,9 @@ int usbCam::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void usbCam::newImage(Mat _t1)
+void usbCam::newImage(Mat _t1, qint64 _t2)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

@@ -435,6 +435,8 @@ release\moc_basegigecamera.cpp: ui_mainwindow.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QRadioButton \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qradiobutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
@@ -894,6 +896,8 @@ release\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QRadioButton \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qradiobutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
@@ -1227,6 +1231,8 @@ release\basegigecamera.obj: basegigecamera.cpp basegigecamera.hpp \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QRadioButton \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qradiobutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
@@ -1433,6 +1439,8 @@ release\flircamera.obj: flircamera.cpp flircamera.hpp \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QPushButton \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qpushbutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QRadioButton \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qradiobutton.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QSlider \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QStatusBar \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qstatusbar.h \
@@ -1493,7 +1501,9 @@ release\flircamera.obj: flircamera.cpp flircamera.hpp \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QThread \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qthread.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QImage \
-		temperature.hpp
+		temperature.hpp \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QTime \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qdatetime.h
 
 release\temperature.obj: temperature.cpp temperature.hpp
 
@@ -1578,7 +1588,11 @@ release\usbcam.obj: usbcam.cpp usbcam.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\contrib\contrib.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\contrib\retina.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\contrib\openfabmap.hpp \
-		C:\opencv24\opencv\build\install32\include\opencv2\legacy\compat.hpp
+		C:\opencv24\opencv\build\install32\include\opencv2\legacy\compat.hpp \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QTime \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qdatetime.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qshareddata.h \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qhash.h
 
 release\moc_mainwindow.obj: release\moc_mainwindow.cpp 
 

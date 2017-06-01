@@ -23,7 +23,7 @@ using namespace cv;
 using namespace std;
 
 QMutex mutex1;
-
+QTimer* mergeTime;
 CFlirCamera* myFlir;
 usbCam* myUSBcam;
 RNG rng(12345);
@@ -43,18 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
     myFlir = new CFlirCamera();
     myUSBcam = new usbCam();
 
+
     myUSBcam->hx = 279;
     myUSBcam->hy = 207;
     myUSBcam->px = 185;
     myUSBcam->py = 161;
-
-
-    myFlir->mutex = &mutex1;
-    myUSBcam->mutex1 = &mutex1;
-
-    connect(myUSBcam,SIGNAL(newImage(Mat)),this,SLOT(processImage(Mat)));
-    connect(myFlir,SIGNAL(sendMatImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
-
 
     ui->qsliderIR1->setValue(myUSBcam->px);
     ui->qsliderIR2->setValue(myUSBcam->py);
@@ -62,11 +55,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->qsliderUSB2->setValue(myUSBcam->hx);
 
 
-    ui->qtextIR1->setText(QString::number(ui->qsliderIR1->value()));
-    ui->qtextIR2->setText(QString::number(ui->qsliderIR2->value()));
+//    ui->qtextIR1->setText(QString::number(ui->qsliderIR1->value()));
+//    ui->qtextIR2->setText(QString::number(ui->qsliderIR2->value()));
 
-    ui->qtextUSB1->setText(QString::number(ui->qsliderUSB1->value()));
-    ui->qtextUSB2->setText(QString::number(ui->qsliderUSB2->value()));
+//    ui->qtextUSB1->setText(QString::number(ui->qsliderUSB1->value()));
+//    ui->qtextUSB2->setText(QString::number(ui->qsliderUSB2->value()));
+
+    ui->qtextIR1->setText(QString::number(myUSBcam->hx));
+    ui->qtextIR2->setText(QString::number(myUSBcam->hy));
+
+    ui->qtextUSB1->setText(QString::number(myUSBcam->px));
+    ui->qtextUSB2->setText(QString::number(myUSBcam->py));
+
+    myFlir->mutex = &mutex1;
+    myUSBcam->mutex1 = &mutex1;
+
+    connect(myUSBcam,SIGNAL(newImage(Mat,qint64)),this,SLOT(processImage(Mat,qint64)));
+    connect(myFlir,SIGNAL(sendMatImage(cv::Mat,qint64)),this,SLOT(processIRImage(cv::Mat,qint64)));
+
+    mergeTime = new QTimer(this);
+    mergeTime->setInterval(1000/25);
+    connect(mergeTime, SIGNAL(timeout()), this, SLOT(mergeImages()));
+
+
+
 
 
 }
@@ -126,27 +138,26 @@ void MainWindow::fFindContours(Mat original, Mat* mcontours, double t1, double t
 }
 
 
-void MainWindow::processImage(Mat cameraFrame)
+void MainWindow::processImage(Mat cameraFrame, qint64 timestamp)
 {
     int thr1 = ui->qsliderUSB1->value();
     int thr2 = ui->qsliderUSB2->value();
 
     Mat framergb, irContours, irBGR;
-    fFindContours(cameraFrame, &irContours, thr1, thr2,0 );
     cv::cvtColor(cameraFrame, framergb, CV_RGB2BGR);
     QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
     ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
 
 
     //blending 2 images
-    double alpha = 0.5; double beta = 0.5; double input = 0.5;
-    Mat blended, blendedBBR;
+    //double alpha = 0.5; double beta = 0.5; double input = 0.5;
+    //Mat blended, blendedBBR;
 
 
-    addWeighted( myUSBcam->current, alpha, myFlir->current, beta, 0.0, blended);
-    cv::cvtColor(blended, blendedBBR, CV_RGB2BGR);
-    QImage im2 = QImage((const unsigned char*) blendedBBR.data, blendedBBR.cols, blendedBBR.rows, QImage::Format_RGB888);
-    ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
+    //addWeighted( myUSBcam->current, alpha, myFlir->current, beta, 0.0, blended);
+    //cv::cvtColor(blended, blendedBBR, CV_RGB2BGR);
+    //QImage im2 = QImage((const unsigned char*) blendedBBR.data, blendedBBR.cols, blendedBBR.rows, QImage::Format_RGB888);
+    //ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
 
 
     //cv::cvtColor(irContours, irBGR, CV_RGB2BGR);
@@ -158,7 +169,7 @@ void MainWindow::processImage(Mat cameraFrame)
 
 
 
-void MainWindow::processIRImage(cv::Mat Img_Iron)
+void MainWindow::processIRImage(cv::Mat Img_Iron, qint64 timestamp)
 {
 
 
@@ -172,12 +183,12 @@ void MainWindow::processIRImage(cv::Mat Img_Iron)
 
 
     //show contorno
-    int thr1 = ui->qsliderIR1->value();
-    int thr2 = ui->qsliderIR2->value();
-    fFindContours(Img_Iron, &irContours, thr1, thr2,1 );
-    cv::cvtColor(irContours, iRGBContours, CV_RGB2BGR);
-    QImage imr = QImage((const unsigned char*) iRGBContours.data, iRGBContours.cols, iRGBContours.rows, QImage::Format_RGB888);
-    ui->imageCountourIRlabel->setPixmap(QPixmap::fromImage(imr));
+//    int thr1 = ui->qsliderIR1->value();
+//    int thr2 = ui->qsliderIR2->value();
+//    fFindContours(Img_Iron, &irContours, thr1, thr2,1 );
+//    cv::cvtColor(irContours, iRGBContours, CV_RGB2BGR);
+//    QImage imr = QImage((const unsigned char*) iRGBContours.data, iRGBContours.cols, iRGBContours.rows, QImage::Format_RGB888);
+//    ui->imageCountourIRlabel->setPixmap(QPixmap::fromImage(imr));
 }
 
 
@@ -188,11 +199,41 @@ void MainWindow::on_busbCam_clicked()
     if( myUSBcam->imageTimer->isActive() )
     {
         myUSBcam->imageTimer->stop();
+        mergeTime->stop();
     }
     else
     {
         myUSBcam->imageTimer->start(40);
+        mergeTime->start(100);
     }
+}
+
+void MainWindow::mergeImages()
+{
+
+
+
+    //blending 2 images
+    double alpha = 0.5; double beta = 0.5; double input = 0.5;
+    Mat blended, blendedBBR;
+
+
+    mutex1.lock();
+    addWeighted( myUSBcam->current, alpha, myFlir->current, beta, 0.0, blended);
+    mutex1.unlock();
+
+    cv::cvtColor(blended, blendedBBR, CV_RGB2BGR);
+    QImage im2 = QImage((const unsigned char*) blendedBBR.data, blendedBBR.cols, blendedBBR.rows, QImage::Format_RGB888);
+    ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
+
+
+    //cv::cvtColor(irContours, irBGR, CV_RGB2BGR);
+    //cv::cvtColor(myUSBcam->current, irBGR, CV_RGB2BGR);
+    //QImage im2 = QImage((const unsigned char*) irBGR.data, irBGR.cols, irBGR.rows, QImage::Format_RGB888);
+    //ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
+
+
+
 }
 
 

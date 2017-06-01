@@ -21,6 +21,7 @@ class usbCam : public QObject
 public:
     int px, py, hx, hy;
     cv::Mat current;
+    qint64 timestamp;
     usbCam();
     QTimer* imageTimer;
     QMutex* mutex1;
@@ -31,7 +32,7 @@ public slots:
     void donextFrame();
 
 signals:
-    void newImage(Mat image);
+    void newImage(Mat image, qint64 timestamp);
 };
 
 #endif // USBCAM_H

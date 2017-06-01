@@ -27,8 +27,9 @@ public:
     ~MainWindow();
 
 public slots:
-    void processImage(Mat image);
-    void processIRImage(cv::Mat image);
+    void mergeImages();
+    void processImage(Mat image, qint64 timestamp);
+    void processIRImage(cv::Mat image, qint64 timestamp);
     //void processIRQImage(QPixmap image);
     void fFindContours(Mat original, Mat* mcontours , double t1, double t2, int cameratype);
     void on_btok_clicked();
