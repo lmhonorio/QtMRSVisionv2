@@ -8,6 +8,8 @@ usbCam::usbCam()
     imageTimer->setInterval(1000/25);
     connect(imageTimer, SIGNAL(timeout()), this, SLOT(donextFrame()));
 
+    current = cv::Mat::zeros(640,512,CV_8UC3);
+
 }
 
 
@@ -44,9 +46,13 @@ void usbCam::donextFrame()
         USBstream.read(cameraFrame);
 
         cv::Mat redImg;
-        cv::resize(cameraFrame, redImg, cv::Size(cameraFrame.cols * 0.5,cameraFrame.rows * 0.5), 0, 0, CV_INTER_LINEAR);
-        cv::Rect myROI(50, 50, 120, 120);
-        redImg = redImg(myROI);
+        cv::Rect myROI(px, py, hx, hy);
+        redImg = cameraFrame(myROI);
+        //cv::resize(cameraFrame, redImg, cv::Size(cameraFrame.cols * 0.4,cameraFrame.rows * 0.4), 0, 0, CV_INTER_LINEAR);
+        cv::resize(redImg, redImg, cv::Size(640,512), 0, 0, CV_INTER_LINEAR);
+
+
+        current = redImg;
         newImage(redImg);
         //newImage(cameraFrame);
     }

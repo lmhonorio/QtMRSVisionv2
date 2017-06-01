@@ -43,11 +43,24 @@ MainWindow::MainWindow(QWidget *parent) :
     myFlir = new CFlirCamera();
     myUSBcam = new usbCam();
 
+    myUSBcam->hx = 279;
+    myUSBcam->hy = 207;
+    myUSBcam->px = 185;
+    myUSBcam->py = 161;
+
+
     myFlir->mutex = &mutex1;
     myUSBcam->mutex1 = &mutex1;
 
     connect(myUSBcam,SIGNAL(newImage(Mat)),this,SLOT(processImage(Mat)));
     connect(myFlir,SIGNAL(sendMatImage(cv::Mat)),this,SLOT(processIRImage(cv::Mat)));
+
+
+    ui->qsliderIR1->setValue(myUSBcam->px);
+    ui->qsliderIR2->setValue(myUSBcam->py);
+    ui->qsliderUSB1->setValue(myUSBcam->hx);
+    ui->qsliderUSB2->setValue(myUSBcam->hx);
+
 
     ui->qtextIR1->setText(QString::number(ui->qsliderIR1->value()));
     ui->qtextIR2->setText(QString::number(ui->qsliderIR2->value()));
@@ -105,21 +118,6 @@ void MainWindow::fFindContours(Mat original, Mat* mcontours, double t1, double t
     }
 
 
-    /// Find contours
-
-//    findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
-
-
-////    /// Draw contours
-//    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
-//    for( int i = 0; i< contours.size(); i++ )
-//    {
-//        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-//        drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
-//    }
-
-
-
     cvtColor(canny_output,ccolour,CV_GRAY2BGR);
     // imshow("usb",ccolour);
 
@@ -140,26 +138,28 @@ void MainWindow::processImage(Mat cameraFrame)
     ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
 
 
-    cv::cvtColor(irContours, irBGR, CV_RGB2BGR);
-    QImage im2 = QImage((const unsigned char*) irBGR.data, irBGR.cols, irBGR.rows, QImage::Format_RGB888);
+    //blending 2 images
+    double alpha = 0.5; double beta = 0.5; double input = 0.5;
+    Mat blended, blendedBBR;
+
+
+    addWeighted( myUSBcam->current, alpha, myFlir->current, beta, 0.0, blended);
+    cv::cvtColor(blended, blendedBBR, CV_RGB2BGR);
+    QImage im2 = QImage((const unsigned char*) blendedBBR.data, blendedBBR.cols, blendedBBR.rows, QImage::Format_RGB888);
     ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
+
+
+    //cv::cvtColor(irContours, irBGR, CV_RGB2BGR);
+    //cv::cvtColor(myUSBcam->current, irBGR, CV_RGB2BGR);
+    //QImage im2 = QImage((const unsigned char*) irBGR.data, irBGR.cols, irBGR.rows, QImage::Format_RGB888);
+    //ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
+
 }
 
-//void MainWindow::processIRQImage(QPixmap image)
-//{
-
-//    ui->imageIRlabel->setPixmap(image);
-
-
-//     //ui->imagelabel->setPixmap(QPixmap::fromImage(image));
-
-//}
 
 
 void MainWindow::processIRImage(cv::Mat Img_Iron)
 {
-//    qInfo("aqui");
-//    imshow("iron8",Img_Iron);
 
 
     Mat framergb, irContours, iRGBContours;
@@ -250,20 +250,24 @@ void MainWindow::on_bLoadFlirConfig_clicked()
 
 void MainWindow::on_qsliderIR1_valueChanged(int value)
 {
+    myUSBcam->hx = value;
     ui->qtextIR1->setText(QString::number(value));
 }
 
 void MainWindow::on_qsliderIR2_valueChanged(int value)
 {
+    myUSBcam->hy = value;
     ui->qtextIR2->setText(QString::number(value));
 }
 
 void MainWindow::on_qsliderUSB1_valueChanged(int value)
 {
+    myUSBcam->px = value;
     ui->qtextUSB1->setText(QString::number(value));
 }
 
 void MainWindow::on_qsliderUSB2_valueChanged(int value)
 {
+    myUSBcam->py = value;
     ui->qtextUSB2->setText(QString::number(value));
 }

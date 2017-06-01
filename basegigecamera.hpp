@@ -50,6 +50,7 @@ public:
 
 
    // __event void OnEventRaised(std::string* message);
+    cv::Mat current;
 
         //methods related with generic GIGe Cameras
     CAM_HANDLE			m_hCamBase;

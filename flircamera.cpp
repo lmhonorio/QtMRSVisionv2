@@ -9,6 +9,7 @@ using namespace std;
 CFlirCamera::CFlirCamera()
 {
     p_Original = NULL;
+    current = cv::Mat::zeros(640,512,CV_8UC3);
 }
 
 CFlirCamera::~CFlirCamera(void)
@@ -191,9 +192,10 @@ void CFlirCamera::HandleReceivedImage(void)
 
 
     mutex->lock();
-    cv::Mat redImg;
-    cv::resize(Img_Iron, redImg, cv::Size(Img_Iron.cols * 0.5,Img_Iron.rows * 0.5), 0, 0, CV_INTER_LINEAR);
+    cv::Mat redImg = Img_Iron;
+    //cv::resize(Img_Iron, redImg, cv::Size(Img_Iron.cols * 0.5,Img_Iron.rows * 0.5), 0, 0, CV_INTER_LINEAR);
     //sendMatImage(Img_Iron);
+    current = redImg.clone();
     sendMatImage(redImg);
 
     cv::waitKey(10);

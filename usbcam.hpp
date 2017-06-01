@@ -19,6 +19,8 @@ class usbCam : public QObject
     Q_OBJECT
 
 public:
+    int px, py, hx, hy;
+    cv::Mat current;
     usbCam();
     QTimer* imageTimer;
     QMutex* mutex1;
