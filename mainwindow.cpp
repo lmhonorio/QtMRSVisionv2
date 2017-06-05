@@ -24,6 +24,7 @@ using namespace std;
 
 QMutex mutex1;
 QTimer* mergeTime;
+QTimer* saveTime;
 CFlirCamera* myFlir;
 usbCam* myUSBcam;
 RNG rng(12345);
@@ -76,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mergeTime = new QTimer(this);
     mergeTime->setInterval(1000/25);
     connect(mergeTime, SIGNAL(timeout()), this, SLOT(mergeImages()));
+
 
 
 
@@ -176,8 +178,15 @@ void MainWindow::processIRImage(cv::Mat Img_Iron, qint64 timestamp)
     Mat framergb, irContours, iRGBContours;
 
     //show imagem original
-    cv::cvtColor(Img_Iron, framergb, CV_RGB2BGR);
-    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
+//    cv::cvtColor(Img_Iron, framergb, CV_RGB2BGR);
+//    equalizeHist(framergb, framergb);
+//    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
+
+    cv::cvtColor(Img_Iron, framergb, CV_RGB2GRAY);
+    equalizeHist(framergb, framergb);
+    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_Grayscale8);
+
+
     ui->imageIRlabel->setPixmap(QPixmap::fromImage(im));
 
 
@@ -241,20 +250,28 @@ void MainWindow::mergeImages()
 
 void MainWindow::on_bFindCamera_clicked()
 {
+    try{
     myFlir->OpenFactoryAndCamera();
     ui->lb_cameraname->setText(myFlir->GetCameraName());
+    }
+    catch(...){}
 
 }
 
 void MainWindow::on_bLoadFlirConfig_clicked()
 {
 
-    Mat imLena,framergb;
-    imLena = imread("C:\\Users\\usuario\\Dropbox\\Projetos\\VisualProcessing\\Qtprojects\\QtMRSVision\\lena2.jpg",1);
-    cv::cvtColor(imLena, framergb, CV_RGB2BGR);
-    QImage im = QImage((uchar*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
-    //imshow("iron8",imLena);
-    ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
+
+    mutex1.lock();
+    QString filename;
+    filename.sprintf(".\\pics\\%s_%d_%d.jpg","USB",1,myUSBcam->timestamp);
+    imwrite(filename.toLatin1().data(),myUSBcam->current);
+    filename.sprintf(".\\pics\\%s_%d_%d.jpg","IR",1,myFlir->timestamp);
+    imwrite(filename.toLatin1().data(),myFlir->current);
+    mutex1.unlock();
+
+
+    //imwrite()
 
 //    qInfo("conectando");
 //    connect(myUSBcam,SIGNAL(newImage(cv::Mat)),this,SLOT(processImage(cv::Mat)));

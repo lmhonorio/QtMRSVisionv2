@@ -119,7 +119,7 @@ void CFlirCamera::HandleReceivedImage(void)
 
     //find max and min values
 
-    uint16_t minvalue = 999999;
+    uint16_t minvalue = 99999999;
     uint16_t maxvalue = 0; //16000
 
 
@@ -135,8 +135,12 @@ void CFlirCamera::HandleReceivedImage(void)
                 minvalue = Mi[j];
         }
     }
-    uint16_t spam = maxvalue - minvalue + 1;
 
+//    minvalue = (uint16_t)8000;
+//    maxvalue = (uint16_t)10000;
+
+
+    uint16_t spam = maxvalue - minvalue + 1;
 
 
     imat_thermalSignal.convertTo(Img_8Bit_Gray,CV_8U, 127.0/(maxvalue - minvalue), -minvalue * 127.0/(maxvalue - minvalue));
@@ -169,7 +173,10 @@ void CFlirCamera::HandleReceivedImage(void)
         p = Img_Iron.ptr<uchar>(i);
         for ( j = 0; j < nCols; ++j)
         {
-            RGB_T c = iron[(int)floor(from[j])];
+            //RGB_T c = iron[(int)floor(from[j])];
+            RGB_T gray[1] = {{(int)floor(from[j]),(int)floor(from[j]),(int)floor(from[j])}};
+            RGB_T c = gray[0];
+
             p[j*3+0] = c.b;
             p[j*3+1] = c.g;
             p[j*3+2] = c.r;
@@ -179,15 +186,19 @@ void CFlirCamera::HandleReceivedImage(void)
     T.setUnit(CTemperature::Celsius);
     T = TauToTemp(maxvalue/4);
 
+    CTemperature Tmin;
+    Tmin.setUnit(CTemperature::Celsius);
+    Tmin = TauToTemp(minvalue/4);
+
     timestamp = QDateTime().currentMSecsSinceEpoch();
 
     QString text;
-    text.sprintf("%.1f C,  %d", T.Value(),timestamp);
+    text.sprintf("%.1f, %.1f, %d, %d", T.Value(),Tmin.Value(),(int)minvalue, (int)maxvalue);
     QByteArray ba = text.toLatin1();
     const char *c_str2 = ba.data();
     int fontFace = cv::FONT_HERSHEY_PLAIN;
-    double fontScale = 2;
-    int thickness = 3;
+    double fontScale = 1.5;
+    int thickness = 2;
     int baseline=0;
     cv::Size textSize = cv::getTextSize(c_str2, fontFace,fontScale, thickness, &baseline);
 

@@ -2,6 +2,7 @@
 #include "basegigecamera.hpp"
 #include <exception>
 #include <QImage>
+#include <stdexcept>
 
 using namespace std;
 
@@ -150,7 +151,13 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
     m_bEnableStreaming = false;
 
     // Open factory
+    try{
     retval = J_Factory_Open((const int8_t *)"" , &m_hFactory);
+    }
+    catch(runtime_error& exc)
+    {
+        return FALSE;
+    }
     if (retval != J_ST_SUCCESS)
     {
         ShowErrorMsg(QString("Could not open factory!"), retval);
@@ -159,7 +166,12 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
     qInfo("Opening factory succeeded\n");
 
     //Update camera list
-    retval = J_Factory_UpdateCameraList(m_hFactory, &bHasChange);
+    try{
+    retval = J_Factory_UpdateCameraList(m_hFactory, &bHasChange);}
+    catch(runtime_error& exc)
+    {
+        return FALSE;
+    }
     if (retval != J_ST_SUCCESS)
     {
         ShowErrorMsg(QString("Could not update camera list!"), retval);
@@ -168,7 +180,13 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
     qInfo("Updating camera list succeeded\n");
 
     // Get the number of Cameras
+    try{
     retval = J_Factory_GetNumOfCameras(m_hFactory, &iNumDev);
+    }
+    catch(runtime_error& exc)
+    {
+        return FALSE;
+    }
     if (retval != J_ST_SUCCESS)
     {
         ShowErrorMsg(QString("Could not get the number of cameras!"), retval);
