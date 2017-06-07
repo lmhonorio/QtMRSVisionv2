@@ -173,9 +173,9 @@ void CFlirCamera::HandleReceivedImage(void)
         p = Img_Iron.ptr<uchar>(i);
         for ( j = 0; j < nCols; ++j)
         {
-            //RGB_T c = iron[(int)floor(from[j])];
-            RGB_T gray[1] = {{(int)floor(from[j]),(int)floor(from[j]),(int)floor(from[j])}};
-            RGB_T c = gray[0];
+            RGB_T c = iron[(int)floor(from[j])];
+            //RGB_T gray[1] = {{(int)floor(from[j]),(int)floor(from[j]),(int)floor(from[j])}};
+            //RGB_T c = gray[0];
 
             p[j*3+0] = c.b;
             p[j*3+1] = c.g;
@@ -237,12 +237,6 @@ void CFlirCamera::HandleReceivedImage(void)
 
 J_STATUS_TYPE  CFlirCamera::openStream(uint32_t iChannel)
 {
-    USBstream.open(0);
-
-    if (!USBstream.isOpened()) { //check if video device has been initialised
-        qInfo("cannot open camera\n\n");
-    }
-
 
     uint32_t iBufferSize = getBufferSize();
 
@@ -254,8 +248,6 @@ J_STATUS_TYPE  CFlirCamera::openStream(uint32_t iChannel)
         return retval;
     }
     qInfo("Opening stream succeeded\n");
-
-
 
 
     return retval;

@@ -46,6 +46,7 @@ public:
     QLabel *qtextIR2;
     QLabel *qtextUSB1;
     QLabel *qtextUSB2;
+    QPushButton *btoffgige;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -134,6 +135,9 @@ public:
         qtextUSB2 = new QLabel(centralWidget);
         qtextUSB2->setObjectName(QStringLiteral("qtextUSB2"));
         qtextUSB2->setGeometry(QRect(710, 650, 47, 13));
+        btoffgige = new QPushButton(centralWidget);
+        btoffgige->setObjectName(QStringLiteral("btoffgige"));
+        btoffgige->setGeometry(QRect(340, 700, 111, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -167,6 +171,7 @@ public:
         qtextIR2->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         qtextUSB1->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         qtextUSB2->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        btoffgige->setText(QApplication::translate("MainWindow", "DESCONECTAR GIGe", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -150,6 +150,7 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
 
     m_bEnableStreaming = false;
 
+
     // Open factory
     try{
     retval = J_Factory_Open((const int8_t *)"" , &m_hFactory);
@@ -315,35 +316,21 @@ void CBaseGIGeCamera::CloseStream()
 {
     if(!m_bEnableStreaming)
     {
+        qInfo("not streaming");
         return;
     }
 
     if (m_hCamBase) {
-        //J_Camera_ExecuteCommand(m_hCamBase, NODE_NAME_ACQSTOP);
+        qInfo("closing cam");
+        J_Camera_ExecuteCommand(m_hCamBase, NODE_NAME_ACQSTOP);
+        qInfo("cam closed");
     }
 
-    if (m_hCam)
-    {
-        // Close camera
-        //J_Camera_ExecuteCommand(m_hCam, NODE_NAME_ACQSTOP);
-        J_Camera_Close(m_hCam);
-        m_hCam = NULL;
-        //TRACE("Closed camera\n");
-    }
-
-
-
-
-    try
-    {
-        if (m_hThread) {
-            //J_Image_CloseStream(m_hThread);
-            //m_hThread = NULL;
-
-        }
-    }
-    catch (exception e)
-    {
+    if (m_hThread){
+        qInfo("closing stream");
+        J_Image_CloseStream(m_hThread);
+        m_hThread = NULL;
+        qInfo("stream closed");
 
     }
 
@@ -351,10 +338,6 @@ void CBaseGIGeCamera::CloseStream()
     return;
 
 
-
-
-
-    //ReleaseImage();
 }
 
 void CBaseGIGeCamera::ReleaseImage()
