@@ -66,11 +66,6 @@ public:
     std::string			usb_windowsName;
 
 
-    //variables related to USB3 camera
-    cv::VideoCapture USBstream;
-
-
-
     int8_t          m_sCameraId[J_CAMERA_ID_SIZE];    // Camera ID
 
 

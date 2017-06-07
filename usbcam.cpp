@@ -11,12 +11,14 @@ usbCam::usbCam()
 
     current = cv::Mat::zeros(640,512,CV_8UC3);
 
+    USBstream.open(0);
+
 }
 
 
 void usbCam::runUSBCamera()
 {
-    VideoCapture USBstream;
+    //VideoCapture USBstream;
     USBstream.open(0);
 
     if (!USBstream.isOpened()) { //check if video device has been initialised

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[25];
-    char stringdata0[336];
+    QByteArrayData data[26];
+    char stringdata0[357];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,7 +55,8 @@ QT_MOC_LITERAL(20, 220, 26), // "on_qsliderIR1_valueChanged"
 QT_MOC_LITERAL(21, 247, 5), // "value"
 QT_MOC_LITERAL(22, 253, 26), // "on_qsliderIR2_valueChanged"
 QT_MOC_LITERAL(23, 280, 27), // "on_qsliderUSB1_valueChanged"
-QT_MOC_LITERAL(24, 308, 27) // "on_qsliderUSB2_valueChanged"
+QT_MOC_LITERAL(24, 308, 27), // "on_qsliderUSB2_valueChanged"
+QT_MOC_LITERAL(25, 336, 20) // "on_btoffgige_clicked"
 
     },
     "MainWindow\0mergeImages\0\0processImage\0"
@@ -67,7 +68,8 @@ QT_MOC_LITERAL(24, 308, 27) // "on_qsliderUSB2_valueChanged"
     "on_qsliderIR1_valueChanged\0value\0"
     "on_qsliderIR2_valueChanged\0"
     "on_qsliderUSB1_valueChanged\0"
-    "on_qsliderUSB2_valueChanged"
+    "on_qsliderUSB2_valueChanged\0"
+    "on_btoffgige_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -77,7 +79,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -85,18 +87,19 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x0a /* Public */,
-       3,    2,   75,    2, 0x0a /* Public */,
-       7,    2,   80,    2, 0x0a /* Public */,
-       9,    5,   85,    2, 0x0a /* Public */,
-      16,    0,   96,    2, 0x0a /* Public */,
-      17,    0,   97,    2, 0x0a /* Public */,
-      18,    0,   98,    2, 0x0a /* Public */,
-      19,    0,   99,    2, 0x0a /* Public */,
-      20,    1,  100,    2, 0x08 /* Private */,
-      22,    1,  103,    2, 0x08 /* Private */,
-      23,    1,  106,    2, 0x08 /* Private */,
-      24,    1,  109,    2, 0x08 /* Private */,
+       1,    0,   79,    2, 0x0a /* Public */,
+       3,    2,   80,    2, 0x0a /* Public */,
+       7,    2,   85,    2, 0x0a /* Public */,
+       9,    5,   90,    2, 0x0a /* Public */,
+      16,    0,  101,    2, 0x0a /* Public */,
+      17,    0,  102,    2, 0x0a /* Public */,
+      18,    0,  103,    2, 0x0a /* Public */,
+      19,    0,  104,    2, 0x0a /* Public */,
+      20,    1,  105,    2, 0x08 /* Private */,
+      22,    1,  108,    2, 0x08 /* Private */,
+      23,    1,  111,    2, 0x08 /* Private */,
+      24,    1,  114,    2, 0x08 /* Private */,
+      25,    0,  117,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -111,6 +114,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Int,   21,
     QMetaType::Void, QMetaType::Int,   21,
     QMetaType::Void, QMetaType::Int,   21,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -133,6 +137,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_qsliderIR2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->on_qsliderUSB1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 11: _t->on_qsliderUSB2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->on_btoffgige_clicked(); break;
         default: ;
         }
     }
@@ -163,13 +168,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

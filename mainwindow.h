@@ -46,6 +46,8 @@ private slots:
 
     void on_qsliderUSB2_valueChanged(int value);
 
+    void on_btoffgige_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

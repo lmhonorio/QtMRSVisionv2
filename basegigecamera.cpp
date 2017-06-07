@@ -2,6 +2,7 @@
 #include "basegigecamera.hpp"
 #include <exception>
 #include <QImage>
+#include <stdexcept>
 
 using namespace std;
 
@@ -149,8 +150,15 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
 
     m_bEnableStreaming = false;
 
+
     // Open factory
+    try{
     retval = J_Factory_Open((const int8_t *)"" , &m_hFactory);
+    }
+    catch(runtime_error& exc)
+    {
+        return FALSE;
+    }
     if (retval != J_ST_SUCCESS)
     {
         ShowErrorMsg(QString("Could not open factory!"), retval);
@@ -159,7 +167,12 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
     qInfo("Opening factory succeeded\n");
 
     //Update camera list
-    retval = J_Factory_UpdateCameraList(m_hFactory, &bHasChange);
+    try{
+    retval = J_Factory_UpdateCameraList(m_hFactory, &bHasChange);}
+    catch(runtime_error& exc)
+    {
+        return FALSE;
+    }
     if (retval != J_ST_SUCCESS)
     {
         ShowErrorMsg(QString("Could not update camera list!"), retval);
@@ -168,7 +181,13 @@ bool CBaseGIGeCamera::OpenFactoryAndCamera()
     qInfo("Updating camera list succeeded\n");
 
     // Get the number of Cameras
+    try{
     retval = J_Factory_GetNumOfCameras(m_hFactory, &iNumDev);
+    }
+    catch(runtime_error& exc)
+    {
+        return FALSE;
+    }
     if (retval != J_ST_SUCCESS)
     {
         ShowErrorMsg(QString("Could not get the number of cameras!"), retval);
@@ -297,35 +316,21 @@ void CBaseGIGeCamera::CloseStream()
 {
     if(!m_bEnableStreaming)
     {
+        qInfo("not streaming");
         return;
     }
 
     if (m_hCamBase) {
-        //J_Camera_ExecuteCommand(m_hCamBase, NODE_NAME_ACQSTOP);
+        qInfo("closing cam");
+        J_Camera_ExecuteCommand(m_hCamBase, NODE_NAME_ACQSTOP);
+        qInfo("cam closed");
     }
 
-    if (m_hCam)
-    {
-        // Close camera
-        //J_Camera_ExecuteCommand(m_hCam, NODE_NAME_ACQSTOP);
-        J_Camera_Close(m_hCam);
-        m_hCam = NULL;
-        //TRACE("Closed camera\n");
-    }
-
-
-
-
-    try
-    {
-        if (m_hThread) {
-            //J_Image_CloseStream(m_hThread);
-            //m_hThread = NULL;
-
-        }
-    }
-    catch (exception e)
-    {
+    if (m_hThread){
+        qInfo("closing stream");
+        J_Image_CloseStream(m_hThread);
+        m_hThread = NULL;
+        qInfo("stream closed");
 
     }
 
@@ -333,10 +338,6 @@ void CBaseGIGeCamera::CloseStream()
     return;
 
 
-
-
-
-    //ReleaseImage();
 }
 
 void CBaseGIGeCamera::ReleaseImage()
