@@ -17,7 +17,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:strictStrings -Zc:throwingNew -Zi -M
 INCPATH       = -I. -IC:\opencv24\opencv\build\install32\include -I"C:\Program Files\JAI\SDK\library\CPP\include" -IC:\Qt\Qt5.8.0_32\5.8\msvc2015\include -IC:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets -IC:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui -IC:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtANGLE -IC:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore -Idebug -I. -IC:\Qt\Qt5.8.0_32\5.8\msvc2015\mkspecs\win32-msvc2015 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\qtmaind.lib /LIBPATH:C:\utils\my_sql\my_sql\lib /LIBPATH:C:\utils\postgresql\pgsql\lib shell32.lib /LIBPATH:C:\opencv24\opencv\build\install32\lib /LIBPATH:C:\opencv24\opencv\build\install32\bin C:\opencv24\opencv\build\install32\lib\opencv_core2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_highgui2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_imgproc2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_legacy2411d.lib /LIBPATH:"C:\Program Files\JAI\SDK\library\CPP\lib\Win32_i86" "C:\Program Files\JAI\SDK\library\CPP\lib\Win32_i86\Jai_Factory.lib" C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\Qt5Widgetsd.lib C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\Qt5Guid.lib C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\Qt5Cored.lib 
+LIBS          = /LIBPATH:C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\qtmaind.lib /LIBPATH:C:\utils\my_sql\my_sql\lib /LIBPATH:C:\utils\postgresql\pgsql\lib shell32.lib /LIBPATH:C:\opencv24\opencv\build\install32\lib /LIBPATH:C:\opencv24\opencv\build\install32\bin C:\opencv24\opencv\build\install32\lib\opencv_core2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_highgui2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_imgproc2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_legacy2411d.lib C:\opencv24\opencv\build\install32\lib\opencv_features2d2411d.lib /LIBPATH:"C:\Program Files\JAI\SDK\library\CPP\lib\Win32_i86" "C:\Program Files\JAI\SDK\library\CPP\lib\Win32_i86\Jai_Factory.lib" C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\Qt5Widgetsd.lib C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\Qt5Guid.lib C:\Qt\Qt5.8.0_32\5.8\msvc2015\lib\Qt5Cored.lib 
 QMAKE         = C:\Qt\Qt5.8.0_32\5.8\msvc2015\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -282,11 +282,16 @@ debug\moc_mainwindow.cpp: C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QMainW
 		C:\opencv24\opencv\build\install32\include\opencv2\core\core_c.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\imgproc.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\types_c.h \
+		C:\opencv24\opencv\build\install32\include\opencv2\features2d\features2d.hpp \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\miniflann.hpp \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\defines.h \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\config.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QTimer \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qtimer.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qbasictimer.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QMutex \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QImage \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QCloseEvent \
 		mainwindow.h \
 		debug\moc_predefs.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\bin\moc.exe
@@ -722,11 +727,16 @@ debug\main.obj: main.cpp mainwindow.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\core\core_c.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\imgproc.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\types_c.h \
+		C:\opencv24\opencv\build\install32\include\opencv2\features2d\features2d.hpp \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\miniflann.hpp \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\defines.h \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\config.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QTimer \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qtimer.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qbasictimer.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QMutex \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QImage \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QCloseEvent \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QApplication \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\qapplication.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qcoreapplication.h \
@@ -850,11 +860,16 @@ debug\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\core\core_c.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\imgproc.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\types_c.h \
+		C:\opencv24\opencv\build\install32\include\opencv2\features2d\features2d.hpp \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\miniflann.hpp \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\defines.h \
+		C:\opencv24\opencv\build\install32\include\opencv2\flann\config.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QTimer \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qtimer.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\qbasictimer.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QMutex \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QImage \
+		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtGui\QCloseEvent \
 		ui_mainwindow.h \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QVariant \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtWidgets\QAction \
@@ -904,16 +919,12 @@ debug\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		basegigecamera.hpp \
 		C:\Qt\Qt5.8.0_32\5.8\msvc2015\include\QtCore\QObject \
 		C:\opencv24\opencv\build\install32\include\opencv2\opencv.hpp \
-		C:\opencv24\opencv\build\install32\include\opencv2\flann\miniflann.hpp \
-		C:\opencv24\opencv\build\install32\include\opencv2\flann\defines.h \
-		C:\opencv24\opencv\build\install32\include\opencv2\flann\config.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\imgproc\imgproc_c.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\photo\photo.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\photo\photo_c.h \
 		C:\opencv24\opencv\build\install32\include\opencv2\video\video.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\video\tracking.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\video\background_segm.hpp \
-		C:\opencv24\opencv\build\install32\include\opencv2\features2d\features2d.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\objdetect\objdetect.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\calib3d\calib3d.hpp \
 		C:\opencv24\opencv\build\install32\include\opencv2\core\affine.hpp \

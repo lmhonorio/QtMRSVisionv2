@@ -41,10 +41,11 @@ void usbCam::donextFrame()
 {
 
     timestamp = QDateTime().currentMSecsSinceEpoch();
+    QString ntext = QDateTime().currentDateTime().toString("yyMMddhhmmssz");
     QString text;
     text.sprintf("%d",timestamp);
 
-    QByteArray ba = text.toLatin1();
+    QByteArray ba = ntext.toLatin1();
     const char *c_str2 = ba.data();
     int fontFace = FONT_HERSHEY_PLAIN;
     double fontScale = 2;
@@ -69,9 +70,6 @@ void usbCam::donextFrame()
         cv::resize(redImg, redImg, cv::Size(640,512), 0, 0, CV_INTER_LINEAR);
         current = redImg.clone();
         putText(redImg, c_str2, textOrg, fontFace, fontScale, Scalar::all(255), thickness, 8);
-
-
-
 
         newImage(redImg,timestamp);
         //newImage(cameraFrame);

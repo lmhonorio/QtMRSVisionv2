@@ -145,9 +145,9 @@ void MainWindow::processImage(Mat cameraFrame, qint64 timestamp)
     int thr1 = ui->qsliderUSB1->value();
     int thr2 = ui->qsliderUSB2->value();
 
-    Mat framergb, irContours, irBGR;
-    cv::cvtColor(cameraFrame, framergb, CV_RGB2BGR);
-    QImage im = QImage((const unsigned char*) framergb.data, framergb.cols, framergb.rows, QImage::Format_RGB888);
+    Mat framebgr, irContours, irBGR;
+    cv::cvtColor(cameraFrame, framebgr, CV_RGB2BGR);
+    QImage im = QImage((const unsigned char*) framebgr.data, framebgr.cols, framebgr.rows, QImage::Format_RGB888);
     ui->ImageUSBLabel->setPixmap(QPixmap::fromImage(im));
 
 
@@ -225,20 +225,47 @@ void MainWindow::on_busbCam_clicked()
 void MainWindow::mergeImages()
 {
 
+    vector<Point2f> cornersA;
 
-
-    //blending 2 images
-    double alpha = 0.5; double beta = 0.5; double input = 0.5;
-    Mat blended, blendedBBR;
-
-
+    Mat Gray;
     mutex1.lock();
-    addWeighted( myUSBcam->current, alpha, myFlir->current, beta, 0.0, blended);
+    Mat Clr =  myUSBcam->current.clone();
     mutex1.unlock();
 
-    cv::cvtColor(blended, blendedBBR, CV_RGB2BGR);
-    QImage im2 = QImage((const unsigned char*) blendedBBR.data, blendedBBR.cols, blendedBBR.rows, QImage::Format_RGB888);
+    cvtColor(Clr,Gray,cv::COLOR_RGB2GRAY);
+
+    try{
+    goodFeaturesToTrack(Gray, cornersA, 10, 0.01, 30);
+
+    for( size_t i = 0; i < cornersA.size(); i++ )
+      {
+      cv::circle( Clr, cornersA[i], 10, cv::Scalar( 255. ), -1 );
+    }}
+    catch(...)
+    {
+
+    }
+
+    Mat framebgr;
+    cv::cvtColor(Clr, framebgr, CV_RGB2BGR);
+    QImage im2 = QImage((const unsigned char*) framebgr.data, framebgr.cols, framebgr.rows, QImage::Format_RGB888);
     ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
+
+
+
+
+//    //blending 2 images
+//    double alpha = 0.5; double beta = 0.5; double input = 0.5;
+//    Mat blended, blendedBBR;
+
+
+//    mutex1.lock();
+//    addWeighted( myUSBcam->current, alpha, myFlir->current, beta, 0.0, blended);
+//    mutex1.unlock();
+
+//    cv::cvtColor(blended, blendedBBR, CV_RGB2BGR);
+//    QImage im2 = QImage((const unsigned char*) blendedBBR.data, blendedBBR.cols, blendedBBR.rows, QImage::Format_RGB888);
+//    ui->imageContourUSBLabel->setPixmap(QPixmap::fromImage(im2));
 
 
     //cv::cvtColor(irContours, irBGR, CV_RGB2BGR);
@@ -340,4 +367,45 @@ void MainWindow::on_btoffgige_clicked()
 
     myFlir->CloseStream();
 
+}
+
+void MainWindow::on_MainWindow_destroyed()
+{
+    qInfo("saiu...");
+    myFlir = NULL;
+    myUSBcam = NULL;
+    mergeTime = NULL;
+
+
+
+}
+
+void MainWindow::on_MainWindow_destroyed(QObject *arg1)
+{
+    qInfo("saiu...");
+    myFlir = NULL;
+    myUSBcam = NULL;
+    mergeTime = NULL;
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "APP_NAME",
+                                                                tr("Are you sure?\n"),
+                                                                QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+                                                                QMessageBox::Yes);
+    if (resBtn != QMessageBox::Yes) {
+        event->ignore();
+    } else {
+        event->accept();
+        qInfo("saiu...");
+
+        delete myFlir;
+        delete myUSBcam;
+        delete mergeTime;
+        delete saveTime;
+
+        this->close();
+
+    }
 }

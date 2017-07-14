@@ -47,14 +47,17 @@ void CFlirCamera::setHandler(CAM_HANDLE *hCam, int idepth, int ichannels)
     //get B
     J_Camera_GetNodeByName(*m_hCam, (int8_t*)"B", &hNode);
     J_Node_GetValueDouble(hNode,0,&m_B);
+    //qInfo("Camera parameter B: %f\n", m_B);
 
     //get F
     J_Camera_GetNodeByName(*m_hCam, (int8_t*)"F", &hNode);
     J_Node_GetValueDouble(hNode,0,&m_F);
+    //qInfo("Camera parameter F: %f\n", m_F);
 
     //get O
     J_Camera_GetNodeByName(*m_hCam, (int8_t*)"O", &hNode);
     J_Node_GetValueDouble(hNode,0,&m_O);
+    //qInfo("Camera parameter O: %f\n", m_O);
 
     //get Emissivity
     J_Camera_GetNodeByName(*m_hCam, (int8_t*)"ObjectEmissivity", &hNode);
@@ -66,7 +69,7 @@ void CFlirCamera::setHandler(CAM_HANDLE *hCam, int idepth, int ichannels)
 
     //Ambient Temperature
     J_Camera_GetNodeByName(*m_hCam, (int8_t*)"ReflectedTemperature", &hNode);
-    retval = J_Node_GetValueDouble(hNode,0,&m_AtmTemp);
+    retval = J_Node_GetValueDouble(hNode,0,&m_AmbTemp);
 
 
     m_WT = 573.0; // Default value high gain mode
@@ -184,7 +187,7 @@ void CFlirCamera::HandleReceivedImage(void)
     }
 
     T.setUnit(CTemperature::Celsius);
-    T = TauToTemp(maxvalue/4);
+    T = TauToTemp((maxvalue/4));
 
     CTemperature Tmin;
     Tmin.setUnit(CTemperature::Celsius);
@@ -193,7 +196,7 @@ void CFlirCamera::HandleReceivedImage(void)
     timestamp = QDateTime().currentMSecsSinceEpoch();
 
     QString text;
-    text.sprintf("%.1f, %.1f, %d, %d", T.Value(),Tmin.Value(),(int)minvalue, (int)maxvalue);
+    text.sprintf("%.1f, %.1f, %d, %d", T.Value(),Tmin.Value(),(int)(minvalue/4), (int)(maxvalue/4));
     QByteArray ba = text.toLatin1();
     const char *c_str2 = ba.data();
     int fontFace = cv::FONT_HERSHEY_PLAIN;
@@ -264,7 +267,11 @@ float CFlirCamera::TauToTemp(USHORT sig)
     float T;
     double objSig;
     objSig = powToObjSig((double)sig);
-    T = (float)(m_B / log(m_R /(objSig - m_O) + m_F));
+    double b = m_B;
+    double r = m_R;
+    double O = m_O;
+    double f = m_F;
+    T = (float)(m_B / log(((double)m_R) /(objSig - m_O) + m_F));
     return T;
 }
 

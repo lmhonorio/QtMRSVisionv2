@@ -93,7 +93,7 @@ public:
         imageContourUSBLabel->setObjectName(QStringLiteral("imageContourUSBLabel"));
         imageContourUSBLabel->setGeometry(QRect(450, 320, 421, 301));
         imageContourUSBLabel->setFrameShape(QFrame::Box);
-        imageContourUSBLabel->setScaledContents(false);
+        imageContourUSBLabel->setScaledContents(true);
         imageCountourIRlabel = new QLabel(centralWidget);
         imageCountourIRlabel->setObjectName(QStringLiteral("imageCountourIRlabel"));
         imageCountourIRlabel->setGeometry(QRect(20, 320, 401, 301));

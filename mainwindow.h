@@ -5,10 +5,13 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include<opencv2/features2d/features2d.hpp>
 
 #include <QTimer>
 #include <QMutex>
 #include <QImage>
+
+#include <QCloseEvent>
 
 using namespace cv;
 
@@ -40,6 +43,8 @@ public slots:
 private slots:
     void on_qsliderIR1_valueChanged(int value);
 
+    void closeEvent (QCloseEvent *event);
+
     void on_qsliderIR2_valueChanged(int value);
 
     void on_qsliderUSB1_valueChanged(int value);
@@ -47,6 +52,10 @@ private slots:
     void on_qsliderUSB2_valueChanged(int value);
 
     void on_btoffgige_clicked();
+
+    void on_MainWindow_destroyed();
+
+    void on_MainWindow_destroyed(QObject *arg1);
 
 private:
     Ui::MainWindow *ui;
